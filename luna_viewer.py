@@ -22,6 +22,8 @@ try:
 except:
   # VTK =< 8
   from vtk.vtkImagingCore import vtkRTAnalyticSource
+  
+  app = application
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
