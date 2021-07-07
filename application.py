@@ -174,10 +174,10 @@ config = {
     'displaylogo': False
 }
 
-app = dash.Dash(__name__)
-server = app.server
+application = dash.Dash(__name__)
+server = application.server
 
-app.layout = html.Div([
+application.layout = html.Div([
     html.H2('select annotation directory'),
     dcc.Input(
         id='annot_filepath',
@@ -528,7 +528,7 @@ def get_tpfnfp_slider_marks(df):
     return axial_marks, coronal_marks, saggital_marks
 
 
-@app.callback(
+@application.callback(
     Output('axial_slicer', 'figure'),
     Input('load_button', 'n_clicks'),
     Input('axial_slider', 'value'),
@@ -545,7 +545,7 @@ def update_axial_slicer(load_clks, z_coord, annotation_switch, title):
     return fig_axial_slicer
 
 
-@app.callback(
+@application.callback(
     Output('coronal_slicer', 'figure'),
     Input('load_button', 'n_clicks'),
     Input('coronal_slider', 'value'),
@@ -562,7 +562,7 @@ def update_coronal_slicer(load_clks, y_coord, annotation_switch, title):
     return fig_coronal_slicer
 
 
-@app.callback(
+@application.callback(
     Output('saggital_slicer', 'figure'),
     Input('load_button', 'n_clicks'),
     Input('saggital_slider', 'value'),
@@ -580,7 +580,7 @@ def update_saggital_slicer(load_clks, x_coord, annotation_switch, title):
 
 
 # data directory選択の補助用にサブディレクトリのリストを表示する
-@app.callback(
+@application.callback(
     Output('subdir_list', 'options'),
     Input('data_dir', 'value')
 )
@@ -589,7 +589,7 @@ def get_subdir_list(data_dir):
     data_list = [{'label': i, 'value': i} for i in data_list]
     return data_list
 
-@app.callback(
+@application.callback(
     Output('data_dir', 'value'),
     Input('subdir_list', 'value'),
     State('data_dir', 'value'),
@@ -599,7 +599,7 @@ def append_subdir(subdir, data_dir):
     return os.path.join(data_dir, subdir)
 
 # data directoryの中からサンプル名をリストアップする
-@app.callback(
+@application.callback(
     Output('case_list', 'options'),
     Input('data_dir', 'value'),
     Input('name_filter', 'value'),
@@ -617,7 +617,7 @@ def get_data_list(data_dir, name_filter):
 
 
 # アノテーションの保存
-@app.callback(
+@application.callback(
     Output('save_annotation', 'n_clicks'),
     Input('save_annotation', 'n_clicks'),
     State('case_list', 'value'),
@@ -654,7 +654,7 @@ def save_annotation(save_clicks, case_name, trial_name, tpfnfp, location_categor
 
 
 # アノテーションの読み込みはここ
-@app.callback(
+@application.callback(
     Output('selected_annot', 'children'),
     Output('location_category', 'value'),
     Output('location_subcategory', 'value'),
@@ -724,7 +724,7 @@ def read_annotation_labels(tpfnfp, location_category, location_subcategory, loca
 
 
 # MIP表示の変更を伴う処理はすべてここ
-@app.callback(
+@application.callback(
     Output('mip_title', 'children'),
     Output('axial', 'figure'),
     Output('coronal', 'figure'),
@@ -882,7 +882,7 @@ def update_crop(load_clicks, reset_clicks, axial_data, coronal_data, saggital_da
 
 
 # 候補点の選択肢を切り替える
-@app.callback(
+@application.callback(
     Output('tpfnfp', 'options'),
     Output('tpfnfp', 'value'),
     Input('mip_title', 'children'),
@@ -922,7 +922,7 @@ def update_candidates(mip_title, load_clicks, save_clicks, trial_name, tpfnfp, d
 
 
 # volume rendering
-@app.callback(
+@application.callback(
     Output('volume_render', 'children'),
     Output('show_volume', 'children'),
     Input('xmin', 'value'),
@@ -963,7 +963,7 @@ def show_cropped_volume(xmin, xmax, ymin, ymax, zmin, zmax, case_name, tpfnfp):
 
 
 # MIP画像に線を引いて長さを測定
-@app.callback(
+@application.callback(
     Output('axial_length', 'children'),
     Input('axial', 'relayoutData'),
     Input('reset_length', 'n_clicks'),
@@ -984,7 +984,7 @@ def measure_axial_length(axial_data, reset_clicks):
         raise PreventUpdate
 
 
-@app.callback(
+@application.callback(
     Output('coronal_length', 'children'),
     Input('coronal', 'relayoutData'),
     Input('reset_length', 'n_clicks'),
@@ -1005,7 +1005,7 @@ def measure_coronal_length(coronal_data, reset_clicks):
         raise PreventUpdate
 
 
-@app.callback(
+@application.callback(
     Output('saggital_length', 'children'),
     Input('saggital', 'relayoutData'),
     Input('reset_length', 'n_clicks'),
@@ -1027,6 +1027,6 @@ def measure_saggital_length(saggital_data, reset_clicks):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0')
+    application.run_server(debug=True, host='0.0.0.0')
 
 
