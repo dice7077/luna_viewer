@@ -1026,7 +1026,7 @@ def measure_saggital_length(saggital_data, reset_clicks):
         raise PreventUpdate
 
 
-if __name__ == '__main__':
+def main():
     application.run_server(debug=True, host='0.0.0.0')
 
 
