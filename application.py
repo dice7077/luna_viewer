@@ -23,8 +23,6 @@ except:
   # VTK =< 8
   from vtk.vtkImagingCore import vtkRTAnalyticSource
   
-  app = application
-
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 df_orig = pd.read_csv('./data/eval_fppc1.00_sens0.8190_thresh0.74_analysis_space.csv')
