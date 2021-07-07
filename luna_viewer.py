@@ -27,14 +27,12 @@ except:
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-df_orig = pd.read_csv('/mnt/project/brain/aneurysm/takamiya/temporary/data/dataset1_luna888/annotation_spacing1mm_cropped.csv')
-df = df_orig[df_orig.series_id == '']
-df_orig = pd.read_csv('/mnt/project/pfizer/aspergillus/lungct/luna_detector/test_result/01_change_train_size/size_8/bbox/nms0.1/eval_fppc1.00_sens0.8190_thresh0.74_analysis_space.csv')
+df_orig = pd.read_csv('./data/eval_fppc1.00_sens0.8190_thresh0.74_analysis_space.csv')
 test_sid_list = list(df_orig['series_id'].unique())
 # trial_options = [{'label': i, 'value': i} for i in trial_list]
 trial_options = []
 
-category_df = pd.read_csv('/home/takamiya/PycharmProjects/tools/dash/practice/location_category.csv')
+category_df = pd.read_csv('./data/location_category.csv')
 category_list = list(category_df.location_category.unique())
 category_options = [{'label': i, 'value': i} for i in category_list]
 
@@ -186,7 +184,7 @@ app.layout = html.Div([
     dcc.Input(
         id='annot_filepath',
         type='text',
-        value='/home/takamiya/PycharmProjects/tools/dash/practice/annot/tmp.csv',
+        value='./data/tmp.csv',
         style={
             'width': '50%',
             'height': '50px',
@@ -198,7 +196,7 @@ app.layout = html.Div([
     dcc.Input(
         id='data_dir',
         type='text',
-        value='/mnt/project/brain/aneurysm/takamiya/temporary/data/dataset1_luna888/volume_spacing1mm_cropped_zyx',
+        value='./data/volume',
         style={
             'width': '50%',
             'height': '50px',
