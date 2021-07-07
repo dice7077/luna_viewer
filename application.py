@@ -12,7 +12,7 @@ import math
 import SimpleITK as sitk
 from collections import OrderedDict
 from scipy.ndimage.morphology import binary_erosion
-import cv2
+# import cv2
 
 from volume import get_mra_volume
 
@@ -118,17 +118,17 @@ class CTvolume:
 
             for _z in range(z-1,z+2):
                 slice_tmp = axial[_z,:,:,:].copy()
-                cv2.circle(slice_tmp, (x, y), round(d*1.5), color, thickness=1)
+#                 cv2.circle(slice_tmp, (x, y), round(d*1.5), color, thickness=1)
                 axial[_z,:,:,:] = slice_tmp
 
             for _y in range(y-1, y+2):
                 slice_tmp = coronal[:,_y,:,:]
-                cv2.circle(slice_tmp, (x, z), round(d*1.5), color, thickness=1)
+#                 cv2.circle(slice_tmp, (x, z), round(d*1.5), color, thickness=1)
                 coronal[:, _y, :, :] = slice_tmp
 
             for _x in range(x-1, x+2):
                 slice_tmp = saggital[:,:,_x,:].copy()
-                cv2.circle(slice_tmp, (y, z), round(d*1.5), color, thickness=1)
+#                 cv2.circle(slice_tmp, (y, z), round(d*1.5), color, thickness=1)
                 saggital[:,:,_x,:] = slice_tmp
 
             return axial, coronal, saggital
