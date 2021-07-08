@@ -12,7 +12,7 @@ import math
 import SimpleITK as sitk
 from collections import OrderedDict
 from scipy.ndimage.morphology import binary_erosion
-# import cv2
+import cv2
 
 from volume import get_mra_volume
 
@@ -116,17 +116,17 @@ class CTvolume:
 
             for _z in range(z-1,z+2):
                 slice_tmp = axial[_z,:,:,:].copy()
-#                 cv2.circle(slice_tmp, (x, y), round(d*1.5), color, thickness=1)
+                cv2.circle(slice_tmp, (x, y), round(d*1.5), color, thickness=1)
                 axial[_z,:,:,:] = slice_tmp
 
             for _y in range(y-1, y+2):
                 slice_tmp = coronal[:,_y,:,:]
-#                 cv2.circle(slice_tmp, (x, z), round(d*1.5), color, thickness=1)
+                cv2.circle(slice_tmp, (x, z), round(d*1.5), color, thickness=1)
                 coronal[:, _y, :, :] = slice_tmp
 
             for _x in range(x-1, x+2):
                 slice_tmp = saggital[:,:,_x,:].copy()
-#                 cv2.circle(slice_tmp, (y, z), round(d*1.5), color, thickness=1)
+                cv2.circle(slice_tmp, (y, z), round(d*1.5), color, thickness=1)
                 saggital[:,:,_x,:] = slice_tmp
 
             return axial, coronal, saggital
@@ -253,16 +253,16 @@ application.layout = html.Div([
         html.Div(
             [
                 dcc.Slider(id='axial_slider', min=0, max=500, step=1, value=50, tooltip={'always_visible':True}, marks={}),
-                dcc.Graph(id='axial_slicer', figure=default_fig, style={'width':'900px', 'height':'900px'}, config={'modeBarButtons':[['pan2d']], 'scrollZoom': True}, hoverData=None),
+                dcc.Graph(id='axial_slicer', figure=default_fig, style={'width':'700px', 'height':'700px'}, config={'modeBarButtons':[['pan2d']], 'scrollZoom': True}, hoverData=None),
             ],
-            style={'float': 'left', 'width': '900px', 'height': '900px'}
+            style={'float': 'left', 'width': '700px', 'height': '700px'}
         ),
         html.Div(
             [
                 dcc.Slider(id='coronal_slider', min=0, max=500, step=1, value=50, tooltip={'always_visible':True}, marks={}),
-                dcc.Graph(id='coronal_slicer', figure=default_fig, style={'width':'900px', 'height':'900px'}, config={'modeBarButtons':[['pan2d']], 'scrollZoom': True}, hoverData=None),
+                dcc.Graph(id='coronal_slicer', figure=default_fig, style={'width':'700px', 'height':'700px'}, config={'modeBarButtons':[['pan2d']], 'scrollZoom': True}, hoverData=None),
                 dcc.Slider(id='saggital_slider', min=0, max=500, step=1, value=50, tooltip={'always_visible':True}, marks={}),
-                dcc.Graph(id='saggital_slicer', figure=default_fig, style={'width':'900px', 'height':'900px'}, config={'modeBarButtons':[['pan2d']], 'scrollZoom': True}, hoverData=None),
+                dcc.Graph(id='saggital_slicer', figure=default_fig, style={'width':'700px', 'height':'700px'}, config={'modeBarButtons':[['pan2d']], 'scrollZoom': True}, hoverData=None),
                 # dcc.Graph(id='saggital', figure=default_fig, style={'width': '1200px', 'height': '550px'},
                 #           config=config),
             ],
@@ -413,13 +413,13 @@ application.layout = html.Div([
     html.Div([
         html.Div(
             [
-                dcc.Graph(id='axial', figure=default_fig, style={'width':'900px', 'height':'900px'}, config=config, hoverData=None),
+                dcc.Graph(id='axial', figure=default_fig, style={'width':'700px', 'height':'700px'}, config=config, hoverData=None),
                 html.H5(id='axial_length', children='Draw line in axial MIP to measure length'),
                 html.H5(id='coronal_length', children='Draw line in coronal MIP to measure length'),
                 html.H5(id='saggital_length', children='Draw line in saggital MIP to measure length'),
                 html.Button('reset lenght measurement', id='reset_length', n_clicks=0)
             ],
-            style={'float':'left', 'width':'900px', 'height':'900px'}
+            style={'float':'left', 'width':'700px', 'height':'700px'}
         ),
         html.Div(
             [
@@ -610,6 +610,7 @@ def get_data_list(data_dir, name_filter):
     data_list = [a for a in data_list if name_filter in a]
 
     data_list = [a for a in data_list if a[:-4] in test_sid_list] # result_fileに入っている症例だけを選ぶ
+    data_list.sort()
 
     data_list = [{'label': i, 'value': i} for i in data_list]
 
@@ -1027,6 +1028,6 @@ def measure_saggital_length(saggital_data, reset_clicks):
 
 
 # application.run_server(debug=True, host='0.0.0.0')
-application.run_server(debug=True)
+# application.run_server(debug=True)
 
 
